@@ -1,0 +1,167 @@
+WORK DAY SCHEDULER:
+---------------------------------------
+REQUIRED TECHNOLOGIES:
+- HTML
+- CSS
+- JQuery
+- Moment JS
+
+SUGGESTED TECHNOLOGIES IN CLASS REVIEW
+---------------------------------------
+- JQuery
+- JQuery UI
+- Bootstrap
+- Google Fonts
+---------------------------------------
+FUNCTIONAL/DISPLAY REQUIREMENTS
+---------------------------------------
+- A Daily Planner to create a schedule
+	- CALENDAR DAILY VIEW with TIME FIELDS
+- ON OPEN
+	- Display CURRENT day at top of calendar
+	- NOTE: REQUIREMENTS DO NOT STATE THAT SCHEDULER NEEDS TO SUPPORT MULTIPLE DAYS
+- UI
+	- Scroll capability
+	- Timeblocks for standard business hours
+	- Timeblock color codes indicate if block is past, present, or future
+	- Able to enter event (string - Any text will do) when clicking timeblock
+	- Save button for Event
+		- Save to LocalStorage
+	- Events persist on Page Refresh (will work if local storage)
+
+---------------------------------------
+DATA ITEMS
+---------------------------------------
+NOTE: (JS has Date datatype -
+ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+A DAILY CALENDAR:			: Mixed Data	: INTERP: A place to record, view, manage, and store time-bound events
+							: - date 		: INTERP: day/month/year
+							: - date		: INTERP: itemized time as 1 hour blocks during "regular business hours"
+											:			8am-5pm for simplicity
+							: - Event(s)	: INTERP: Is intended to record events details (desc, start/end times)
+							: 	- date		: - INTERP: Event Start date AND time
+							:  	- date		: - INTERP:	Event End date AND time
+												WARNING: Start time MUST BE LESS THAN End time
+							:	- string	: - INTERP: Details of of activity occurring in the time block
+														(Any text will do)
+------------------------
+VISUAL CALENDAR LAYOUT
+------------------------
+- TOP:	Current Day/Date	: Date 			: INTERP: Today's date (dd-mm-yyyy, etc, LOCAL TIME OFFSET)
+- NEXT: Itemized List		: Date 			: INTERP: 1 hour time blocks as HOUR OF THE DAY (hh am/pm)
+		- First hour	 	: Date			: INTERP: (hh pm)-first hour of "regular business hours" (8 a.m.)
+		- Second hour		: Date			: INTERP: (hh pm)-next sequential hour
+		- ... interim hours	: Date(s)		: INTERP: (hh pm)-for each - remaining hours of day
+		- Last hour			: Date			: INTERP: (hh pm)-last hour of day (4 p.m.)
+- DISPLAY OVERLAYED ON...	: Event object	: INTERP: A scheduled block w/ descriptive text, start time, end time
+  ON ITIMIZED HOURS			: - date		: I: Start date/time
+							: - date		: I: End date/time
+							: - string		: I: Event details (any string will do)
+							: - button		: I: Save button submits Event to Local Storage
+							
+------------------------
+HTML PAGE
+------------------------
+- Head
+	- link google fonts
+	- link bootstrap
+- Body
+	- Script
+		- jquery
+		- jqueryUI
+		
+BOOTSTRAP: 
+							
+------------------------
+CSS
+------------------------
+- Set font = Google Font
+
+------------------------
+JS DATA OBJECTS
+------------------------
+- var currentDate			: date			: INTERP: Today's date to display at top of web page
+
+- var events				: String		: INTERP: Store Event objects for retrieval and display in Calendar
+			 								: - REQUIRES: on STORE, JSON.Stringify to convert Event Object to String
+											: - REQUIRES: on RETRIEVE, JSON.parse to convert back to Event obj
+
+- var RegularHoursStart		: date			: INTERP: AS TIME, hh a.m., Start of regular business hours
+- var regularHoursEnd		: date			: INTERP: AS TIME, hh p.m., End of business hours
+
+- Itemized hours		: array of dates	: INTERP: AS TIME, 1 hour increments
+											: NOTES:
+										  	: - The business hours from regularHoursStart to ...End
+											: - (at least display)
+											: - FORMAT: hh am/pm or hh 24hr)
+		
+- Event container		: Event object		: INTERP: A scheduled event
+						: - String 			: INTERP: Event detail (Any text will do)
+						: - Date 			: INTERP: Event START Time, hh:mm:ss am/pm or 24hr
+						: - Date 			: INTERP: Event END Time, hh:mm:ss am/pm or 24hr
+											: - REQUIREMENT: must be greater than start time
+						: - Button object	: INTERP: Saves Event to local storage (function call)
+
+------------------------
+JS FUNCTIONS
+------------------------
+- Get current date/time						: INTERP: Pass current time to web page element for display
+- Populate calendar HOURS:					: INTERP: Load HOUR ListItems onto web page for display
+	
+	- Get regularHoursStart
+	- Get regularHoursEnd
+	- Make/read array of ours between
+	- Make one ListItem for each HOUR
+		- set text to HH A.M./P.M/
+		- make a border
+	- Append ListItems to webpage
+	
+	--------
+	NOTES: 
+	- This is an opportunity to use one of the JQUERY UI calls
+	- EITHER: 
+		- Make each HOUR element as an editable text field (for Event Object)
+		- Use a JQUERY UI draggable/sortable component to overlay an Event Object
+
+- Set COLOR of each HOUR container based on time (E.G. PAST=GRAY, PRESENT=RED, FUTURE=GREEN)
+- Event Listener(CLICK) for an EVENT SAVE
+  - on SAVE
+	- Write EVENT to LocalStorage (JSON.stringify)
+	
+- Get EVENT from LocalStorage (JSON.parse)
+
+- On Calendar Load
+	- Update page CurrentTime element
+	- Get EVENTs from LocalStorage (JSON.parse)
+	- Add any EVENTS for TODAY to web page in proper time slot
+
+
+--------------------------
+POSSIBLE JS FUNCTION USE:
+---------------------------
+
+USE MOMENT.JS: For time Date/Time functions 
+
+DATE/TIME
+- Date()						:	string		: INTERP: The current date/time
+- new Date()					:	constructor	: INTERP: Returns a new Date object
+- Date.prototype.getHours()		:	number		: INTERP: Returns the hour	
+- Date.prototype.toString()		:	string		: INTERP: Current Date() as a string
+- Date.prototype.toTimeString()	:	string		: INTERP: Current TIME portion of Date as a string
+- Date.prototype.toLocaleDateString() : string	: INTERP: locality sensitive representation of date portion
+- Date.prototype.toLocaleString() : string		: INTERP: string with a locality-sensitive representation of this date.
+- Date.prototype.toLocaleTimeString() : string	: INTERP: locality-sensitive representation of time portion of date
+
+---------------------------
+POSSIBLE BOOTSTRAP: For page styling, flow, sizing, etc
+
+
+---------------------------
+POSSIBLE JQUERY/JQUERY UI: 
+- JQUERY
+- JQUERTYUI
+	- 
+
+
+----------------------------
