@@ -83,20 +83,20 @@ JS DATA OBJECTS
 ------------------------
 - var currentDate			: date			: INTERP: Today's date to display at top of web page
 
-- var events				: String		: INTERP: Store Event objects for retrieval and display in Calendar
+- var eventList				: String		: INTERP: Store Event objects for retrieval and display in Calendar
 			 								: - REQUIRES: on STORE, JSON.Stringify to convert Event Object to String
 											: - REQUIRES: on RETRIEVE, JSON.parse to convert back to Event obj
 
-- var RegularHoursStart		: date			: INTERP: AS TIME, hh a.m., Start of regular business hours
-- var regularHoursEnd		: date			: INTERP: AS TIME, hh p.m., End of business hours
+- var dayStart			: date			: INTERP: AS TIME, hh a.m., Start of regular business hours
+- var dayEnd			: date				: INTERP: AS TIME, hh p.m., End of business hours
 
-- Itemized hours		: array of dates	: INTERP: AS TIME, 1 hour increments
+- Itemized hours		: array of dates	: INTERP: AS TIME, 1 hour increments from reg
 											: NOTES:
 										  	: - The business hours from regularHoursStart to ...End
 											: - (at least display)
 											: - FORMAT: hh am/pm or hh 24hr)
 		
-- Event container		: Event object		: INTERP: A scheduled event
+- var eventItem 		: Event object		: INTERP: A scheduled event
 						: - String 			: INTERP: Event detail (Any text will do)
 						: - Date 			: INTERP: Event START Time, hh:mm:ss am/pm or 24hr
 						: - Date 			: INTERP: Event END Time, hh:mm:ss am/pm or 24hr
