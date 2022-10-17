@@ -28,6 +28,7 @@ FUNCTIONAL/DISPLAY REQUIREMENTS
 	- Save button for Event
 		- Save to LocalStorage
 	- Events persist on Page Refresh (will work if local storage)
+- Uses a date utility library to work with date and time (MOMENT.JS)
 
 ---------------------------------------
 DATA ITEMS
@@ -35,16 +36,16 @@ DATA ITEMS
 NOTE: (JS has Date datatype -
  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
 
-A DAILY CALENDAR:			: Mixed Data	: INTERP: A place to record, view, manage, and store time-bound events
-							: - date 		: INTERP: day/month/year
-							: - date		: INTERP: itemized time as 1 hour blocks during "regular business hours"
-											:			8am-5pm for simplicity
-							: - Event(s)	: INTERP: Is intended to record events details (desc, start/end times)
-							: 	- date		: - INTERP: Event Start date AND time
-							:  	- date		: - INTERP:	Event End date AND time
-												WARNING: Start time MUST BE LESS THAN End time
-							:	- string	: - INTERP: Details of of activity occurring in the time block
-														(Any text will do)
+A DAILY CALENDAR:	: Mixed Data	: INTERP: A place to record, view, manage, and store time-bound events
+					: - date 		: INTERP: day/month/year
+					: - date		: INTERP: itemized time as 1 hour blocks during "regular business hours"
+									:			8am-5pm for simplicity
+					: - Event(s)	: INTERP: Is intended to record events details (desc, start/end times)
+					: 	- date		: - INTERP: Event Start date AND time
+					:  	- date		: - INTERP:	Event End date AND time
+										WARNING: Start time MUST BE LESS THAN End time
+					:	- string	: - INTERP: Details of of activity occurring in the time block
+												(Any text will do)
 ------------------------
 VISUAL CALENDAR LAYOUT
 ------------------------
@@ -81,11 +82,11 @@ CSS
 ------------------------
 JS DATA OBJECTS
 ------------------------
-- var currentDate			: date			: INTERP: Today's date to display at top of web page
+- var currentDate		: date			: INTERP: Today's date to display at top of web page
 
-- var eventList				: String		: INTERP: Store Event objects for retrieval and display in Calendar
-			 								: - REQUIRES: on STORE, JSON.Stringify to convert Event Object to String
-											: - REQUIRES: on RETRIEVE, JSON.parse to convert back to Event obj
+- var eventList			: String		: INTERP: Store Event objects for retrieval and display in Calendar
+	- REQUIRES: on STORE, JSON.Stringify to convert Event Object to String
+	- REQUIRES: on RETRIEVE, JSON.parse to convert back to Event obj
 
 - var dayStart			: date			: INTERP: AS TIME, hh a.m., Start of regular business hours
 - var dayEnd			: date				: INTERP: AS TIME, hh p.m., End of business hours
