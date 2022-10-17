@@ -1,0 +1,70 @@
+MAYBE I NEED TO REVISE AND SIMPLIFY MY DESIGN
+  - REASON: Easier to get done on time - might be easier to figure out
+
+  REVISIONS
+  - Do HTML First 
+x      - USE MOMENT: Get CURRENT DATE (and TIME?) displayed on screen 
+x      - Get UL (or DIV?) created (TRY TO USE BOOTSTRAP/JQUERY)
+?      - Populate UL with LI of time blocks
+  x      - Read dayStart and dayEnd
+  ?      - For (i = dayStart; i < dayEnd; i++) {
+     x       - var TIME = [i] (format here??)
+     x       - Create TIME display element (HOUR AM/PM)
+     x         - Set text = TIME[i]
+     x         - add attributes (data-hour)
+     x         - set BORDER, etc (I'M OK WITH THE LOOK)
+     x       - create TEXT/INPUT element (NOTES)
+     ?         - add attributes (id="hour-note")
+     x         - add style
+     x       - create BUTTON element (SAVE)
+     x          - create event listener 
+     x            - Call function (SAVE TO LOCAL STORAGE)
+
+- Function colorWhen (// color if past, present or future)
+    - For (each UL > LI)
+      - Read TIME 
+      - if (li.time(hour) < moment(currentHour)) {
+          set LI background-color = grey
+      } else if (li.time(hour) == moment(currentHour)) {
+          set LI background-color = red
+      } else {
+          set LI background-color = green
+      }
+
+- Define local storage
+
+- Function (SAVE TO LOCAL STORAGE)
+  x  - Read hour 
+  x  - Read Notes text
+  x  - Store as Object
+  x  - push onto array 
+  WIP  - Push to local storage
+    ** PROBLEM: Multiple entries with same hour are written in LocalStorage
+      ** Need to pull the extra items off
+
+
+---------------------------
+APP
+
+ON LOAD
+- XX show current date
+- ?? Create list elements
+  - Load local storage
+  - Load the sched array? YES, BECAUSE NEED TO KNOW IF HOUR ALREADY EXISTS ON SAVE BELOW
+  - Set text items from storage
+- Change background color based on time
+- Load/show HTML
+
+ON SAVE
+- If text empty, return
+- Else…
+- Check if hour already exists in array…
+- If exists…
+- Remove OLD hour
+- Add new text/hour to array
+- Update local storage
+- Update webpage 
+- Else…
+- - Add to array
+- Update storage 
+- Update webpage
