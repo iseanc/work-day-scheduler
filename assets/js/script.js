@@ -28,11 +28,10 @@ var dayStartTime = moment().hour(dayStartNum).minute(00).format('hh:mm A');
 function tmpl_dayStart(ds) {
     return 
 }
-var curHr = moment(13,'hh').format('h');
+
 console.log("1500 hrs", moment().hour(15).get('hour'));
 console.log("now hrs", moment().hour());
 console.log(moment().hour(15).get('hour') < moment().hour());
-console.log('curHr' + curHr);
 
 // Day End : {date} : INTERP: AS TIME, hh p.m., End of business hours
 var dayEndNum = 17;
@@ -47,7 +46,7 @@ function tmpl_dayStart(ds) {
     return 
 }
 
-var schedule = [];
+var scheduleArray = [];
 
 // ******************************
 // FOR PAGE HEADER
@@ -61,12 +60,11 @@ function showCurrentDate() {
 // store items in local storage
 function storeScheduleEvents() {
   // Stringify and set key in localStorage to schedule array
-  localStorage.setItem("schedule", JSON.stringify(schedule));
+  localStorage.setItem("schedule", JSON.stringify(scheduleArray));
 }
 // sets schedule background color based on if timeblock is past, present or future
 function setTimeColors() {
   schedHr = $(".schedule-hour");
-  console.log(currentHour);
   schedHr.each(function( i ) {
       // PAST: if div-hour(data-hour) is less than current hour
      if (this.dataset.hour < currentHour) {
@@ -130,12 +128,11 @@ function makeElements() {
         return;
       }
       // push the schedule event to the events array
-      schedule.push(scheduleEvent);
+      scheduleArray.push(scheduleEvent);
       // storeToLocalStorage
       storeScheduleEvents();
       // Do I need to re-render to screen?
     });
-
   }
 }
 // makeElements();
@@ -144,16 +141,15 @@ function makeElements() {
 // schedule = JSON.parse(localStorage.getItem('schedule'));
 // console.log(schedule);
 
-for (var i = schedule.length - 1; i >= 0; i--) {
-  if (schedule[i].hour == 11) {
-  //   console.log("the index: " + i + " has hour: " + test[i].hour + " and notes:" + test[i].notes);
+for (var i = scheduleArray.length - 1; i >= 0; i--) {
+  if (scheduleArray[i].hour == 11) {
+     console.log("the index: " + i + " has hour: " + test[i].hour + " and notes:" + test[i].notes);
   //   // console.log(test[i].hour);
-    schedule.splice(i, 1);
-    console.log(schedule);
+  scheduleArray.splice(i, 1);
+    console.log(scheduleArray);
   }
 }
 
-storeScheduleEvents(schedule);
 // console.log(test);
 
 //var index = element.parentElement.getAttribute("data-index");
@@ -163,20 +159,6 @@ storeScheduleEvents(schedule);
 // PULL THESE FUNCTION TEMPLATES IN AS NEEDED
 // ****************************************************************
 
-
-//
-//
-//
-//
-// SETS SEQUENTIAL ID="div-id#" attribute on selected DIV elements
-// could be useful if ID is needed individual elements of same type
-$( "divEE" )
-  .attr( "id", function( arr ) {
-    return "div-id" + arr;
-  })
-  .each(function() {
-    $( "span", this ).html( "(id = '<b>" + this.id + "</b>')" );
-});
 
 // EVENT LISTENER
 // FOR TODOs, THIS IS THE "REMOVE" ACTION
@@ -202,14 +184,14 @@ function init() {
   showCurrentDate();
   // Get stored todos from localStorage
   var storedSchedule = JSON.parse(localStorage.getItem("schedule"));
-
+  console.log(storedSchedule)
   // If todos were retrieved from localStorage, update the todos array to it
   if (storedSchedule !== null) {
-    schedule = storedSchedule;
+    scheduleArray = storedSchedule;
   }
   // This is a helper function that will render todos to the DOM
-  // renderTodos();
-  
+  console.log()
+
   // draw the schedule
   makeElements();
   // update schedule colors
