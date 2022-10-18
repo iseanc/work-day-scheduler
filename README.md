@@ -1,4 +1,4 @@
-# work-day-scheduler
+# Work Day Scheduler
 Module 5 - Web APIs - Module Challenge: a Work Day Scheduling application
 
 ## Description
@@ -6,9 +6,9 @@ Module 5 - Web APIs - Module Challenge: a Work Day Scheduling application
 Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
 
 - What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
+This project provides a web-based interface where a user can log scheduled activities for today (the current day) during regular business hours.  Business hours are set by variables in the script.js file, and are currently set to 8am to 5 pm.
+
+This project is part of a web development bootcamp, and builds on previous experience gained in HTML, CSS, and Javascript by incorporating use of multiple 3rd-party web-development libraries.  In particular, this project uses Bootstrap for styling, JQuery for element creation and event-handling, and Moment.js for implementation of time-based functionality.
 
 ## Table of Contents (Optional)
 
@@ -16,54 +16,46 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Credits](#credits)
 - [License](#license)
+- [Features](#features)
 
 ## Installation
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+See this project deployed live:
+
+[Work Day Scheduler](https://iseanc.github.io/work-day-scheduler/)
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+Instructions for use: 
+- The page displays the current date in the page header.  Times are assumed to be your computer's current time zone.
+- When the page loads, any previous entries you have created will be loaded from Local Storage.
+- Hour blocks are color coded relative to the current time (local time zone):
+```
+GREY: Time is past.
+RED: The current hour.
+GREEN: Time is later in the day
+```
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+- To add new entries or edit existing entries, click in a text and enter/modify notes.
+- To remove an entry, you must edit and remove all text.
+- Click the Save button to save changes.
 
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
 
-## Credits
+NOTE: This tool is currently assumes all calendar entries apply to the current day, even if they were entered on a previous day.  It also assumes all meeting entries are one hour long with start and end times at the beginning and end of each hour.  This is because the calendar area is only "hour-aware".  The app is not storing or using start and end dates. 
 
-List your collaborators, if any, with links to their GitHub profiles.
+![Work Scheduler Page](assets/images/WDS_DemoScreenshot.png)
 
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-
-If you followed tutorials, include links to those here as well.
 
 ## License
 
 The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
 
----
-
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
-
-## Badges
-
-![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
-
-Badges aren't necessary, per se, but they demonstrate street cred. Badges let other developers know that you know what you're doing. Check out the badges hosted by [shields.io](https://shields.io/). You may not understand what they all represent now, but you will in time.
 
 ## Features
 
-If your project has a lot of features, list them here.
+Primary features of this project:
 
-## How to Contribute
-
-If you created an application or package and would like other developers to contribute it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
-
+- The current date (your PCs local time) is displayed at the top of the screen.
+- Hour blocks are color coded relative to the current hour (current hour is red, etc).
+- Text entries are stored in local storage.  Previous entries will be displayed if the web page is closed and reopened.  Entries can be updated as needed.
