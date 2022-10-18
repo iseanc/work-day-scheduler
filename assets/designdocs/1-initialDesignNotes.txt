@@ -18,17 +18,17 @@ FUNCTIONAL/DISPLAY REQUIREMENTS
 - A Daily Planner to create a schedule
 	- CALENDAR DAILY VIEW with TIME FIELDS
 - ON OPEN
-	- Display CURRENT day at top of calendar
+	xx- Display CURRENT day at top of calendar
 	- NOTE: REQUIREMENTS DO NOT STATE THAT SCHEDULER NEEDS TO SUPPORT MULTIPLE DAYS
 - UI
-	- Scroll capability
-	- Timeblocks for standard business hours
-	- Timeblock color codes indicate if block is past, present, or future
-	- Able to enter event (string - Any text will do) when clicking timeblock
-	- Save button for Event
-		- Save to LocalStorage
-	- Events persist on Page Refresh (will work if local storage)
-- Uses a date utility library to work with date and time (MOMENT.JS)
+	xx- Scroll capability
+	xx- Timeblocks for standard business hours
+	xx- Timeblock color codes indicate if block is past, present, or future
+	xx- Able to enter event (string - Any text will do) when clicking timeblock
+	xx - Save button for Event
+	xx 	- Save to LocalStorage
+>>>>	- Events persist on Page Refresh (will work if local storage)
+xx - Uses a date utility library to work with date and time (MOMENT.JS)
 
 ---------------------------------------
 DATA ITEMS
