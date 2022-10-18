@@ -3,7 +3,7 @@
 // ******************************
 // HTML elements
 var rootEl = $('#schedule-today');
-var divHourEl,spanHourEl, inputHourEl, buttonHourEl, schedHrs;
+var divHourEl, spanHourEl, inputHourEl, buttonHourEl, schedHrs;
 
 // Date : {Date}: INTERP: Today's date
 // EXAMPLES: "Thursday, October 13th, 2022"
@@ -29,10 +29,6 @@ function tmpl_dayStart(ds) {
     return 
 }
 
-console.log("1500 hrs", moment().hour(15).get('hour'));
-console.log("now hrs", moment().hour());
-console.log(moment().hour(15).get('hour') < moment().hour());
-
 // Day End : {date} : INTERP: AS TIME, hh p.m., End of business hours
 var dayEndNum = 17;
 // FUNCTION TEMPLATE
@@ -48,11 +44,7 @@ function tmpl_dayStart(ds) {
 
 var scheduleArray = [];
 
-// ******************************
-// FOR PAGE HEADER
-// ****************************** 
-
-// Display current date
+// Display current date at top of page
 function showCurrentDate() {
   $("#currentDay").text(currentDate);
 }
@@ -85,14 +77,30 @@ function setTimeColors() {
   });
 }
 
+// use for sorting scheduleArray
+function compare(a, b) {
+  // Use toUpperCase() to ignore character casing
+  const hourA = Number(a.hour);
+  const hourB = Number(b.hour);
 
-// ******************************
-// MAKE SCHEDULE
-// ******************************
+  let comparison = 0;
+  if (hourA > hourB) {
+    comparison = 1;
+  } else if (hourA < hourB) {
+    comparison = -1;
+  }
+  return comparison;
+}
 
-// Get (select) the parent container element
+// Use to render hour blocks on webpage
+function renderSchedule() {
+  for (var i = 0; i < scheduleArray.length; i++) {
+    console.log(scheduleArray[i].notes);
+    $("#data-note-" + scheduleArray[i].hour).val(scheduleArray[i].notes)
+  }
+}
 
-// - dayStartNum, dayEndNum
+// Create schedule elements to draw on screen
 // get day start/end times;create/display a sequential list of hourly input fields
 function makeElements() {
   for (var i = dayStartNum; i < dayEndNum; i++) {
@@ -101,7 +109,7 @@ function makeElements() {
     // Hour display 
     spanHourEl = $('<span>').attr("data-hour",i).text(moment(i,'hh').format('hh A')).addClass("input-group-text schedule-hour");
     // Text input 
-    inputHourEl = $('<textarea>').addClass('hour-note form-control');
+    inputHourEl = $('<textarea>').addClass('hour-note form-control').attr("id","data-note-" + i);
     // Save button
     buttonHourEl = $('<button>').text("Save").attr("id", "btn-hour-" + i).addClass("btn btn-outline-secondary btn-dark");
     // append TimeSlot parent to schedule container
@@ -123,79 +131,54 @@ function makeElements() {
         hour : scheduleHour,
         notes: scheduleNote
       }
-      // if notes are blank, stop
-      if (scheduleEvent === "") {
-        return;
+    
+      // check if an entry for 'data-hour' already exists in the scheduleArray (in memory)
+      for (var i = 0; i < scheduleArray.length; i++) {
+        
+        scheduleArray.sort(compare);
+        console.log(scheduleArray);
+        //if there are existing entries in the array for this hour
+        if (scheduleArray[i].hour == scheduleHour) {
+          // remove those entries from the array
+          scheduleArray.splice(i, 1);
+          // In this case, decrement index by 1 so search ensures all matching entries get removed
+          i--;
+        }
+
+        // BUG:  BELOW snippet was removed from function as it introduces a problem with old schedule entries getting written to the screen
+        // when a textarea is saved with empty contents to remove an entry.
+
+        // if notes for the current text area are blank, then stop
+        // -- (don't add anything new to the array)
+        // console.log(scheduleEvent.notes)
+        // if (scheduleEvent.notes === "") {
+        //   return;
+        // } 
       }
       // push the schedule event to the events array
       scheduleArray.push(scheduleEvent);
       // storeToLocalStorage
       storeScheduleEvents();
-      // Do I need to re-render to screen?
     });
   }
 }
-// makeElements();
-// setTimeColors();
 
-// schedule = JSON.parse(localStorage.getItem('schedule'));
-// console.log(schedule);
-
-for (var i = scheduleArray.length - 1; i >= 0; i--) {
-  if (scheduleArray[i].hour == 11) {
-     console.log("the index: " + i + " has hour: " + test[i].hour + " and notes:" + test[i].notes);
-  //   // console.log(test[i].hour);
-  scheduleArray.splice(i, 1);
-    console.log(scheduleArray);
-  }
-}
-
-// console.log(test);
-
-//var index = element.parentElement.getAttribute("data-index");
-    //todos.splice(index, 1);
-
-// ****************************************************************
-// PULL THESE FUNCTION TEMPLATES IN AS NEEDED
-// ****************************************************************
-
-
-// EVENT LISTENER
-// FOR TODOs, THIS IS THE "REMOVE" ACTION
-// Add click event to todoList element
-// buttonHourEl.addEventListener("click", function(event) {
-//   var element = event.target;
-
-//   // Checks if element is a button
-//   if (element.matches("button") === true) {
-//     // Get its data-index value and remove the todo element from the list
-//     var index = element.parentElement.getAttribute("data-index");
-//     todos.splice(index, 1);
-
-//     // Store updated todos in localStorage, re-render the list
-//     storeTodos();
-//     renderTodos();
-//   }
-// });
-
-
-// This function is being called below and will run when the page loads.
+// Do all this on page load (called @ end of JS)
 function init() {
+  // show date on page
   showCurrentDate();
   // Get stored todos from localStorage
   var storedSchedule = JSON.parse(localStorage.getItem("schedule"));
-  console.log(storedSchedule)
   // If todos were retrieved from localStorage, update the todos array to it
   if (storedSchedule !== null) {
     scheduleArray = storedSchedule;
   }
-  // This is a helper function that will render todos to the DOM
-  console.log()
-
   // draw the schedule
   makeElements();
   // update schedule colors
   setTimeColors();
+  // render the initial schedule
+  renderSchedule();
 }
 
 // store items in local storage
@@ -203,27 +186,5 @@ function storeTodos() {
   // Stringify and set key in localStorage to todos array
   localStorage.setItem("todos", JSON.stringify(todos));
 }
-
-// THIS EVENT PUTS ITEMS IN STORAGE THEN UPDATES THE DISPLAY OF ENTRIES IN THE LIST ON THE HTML PAGE
-
-// Add submit event to form
-// todoForm.addEventListener("submit", function(event) {
-//   event.preventDefault();
-
-//   var todoText = todoInput.value.trim();
-
-//   // Return from function early if submitted todoText is blank
-//   if (todoText === "") {
-//     return;
-//   }
-
-//   // Add new todoText to todos array, clear the input
-//   todos.push(todoText);
-//   todoInput.value = "";
-
-//   // Store updated todos in localStorage, re-render the list
-//   storeTodos();
-//   renderTodos();
-// });
 
 init()

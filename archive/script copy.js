@@ -229,3 +229,12 @@ function storeTodos() {
 // });
 
 init()
+
+///////////////////////////////////////////////
+// bull shit backup items
+
+function renderSchedule() {
+  for (var i = 0; i < scheduleArray.length; i++) {
+    var inputEl = inputHourEl;
+  }
+}
